@@ -14,5 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    $tweets = \App\Tweet::paginate();
+    return view('welcome', [
+        'tweets' => $tweets
+    ]);
+});
+
+
+Route::get('test-broadcast', function(){
+    broadcast(new \App\Events\NewTweetReceived(new \App\Tweet()));
 });
